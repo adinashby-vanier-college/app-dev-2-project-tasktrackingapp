@@ -1,0 +1,69 @@
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+
+admin.initializeApp();
+const db = admin.firestore();
+const auth = admin.auth();
+
+exports.loginUser = functions.https.onCall(async (data, context) => {
+  const { email, password } = data;
+
+  try {
+    const userRecord = await auth.getUserByEmail(email);
+    
+    const customToken = await auth.createCustomToken(userRecord.uid);
+    
+    return {
+      message: "Login successful",
+      user_id: userRecord.uid,
+      token: customToken // client can use this to sign in
+    };
+
+  } catch (error) {
+    return {
+      message: "Invalid credentials",
+      user_id: null
+    };
+  }
+});
+
+
+
+
+
+
+
+
+
+
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+
+admin.initializeApp();
+const db = admin.firestore();
+
+exports.createReminder = functions.https.onCall(async (data, context) => {
+  try {
+    const { user_id, reminder_text, reminder_time, is_recurring } = data;
+
+    if (!user_id || !reminder_text || !reminder_time || is_recurring === undefined) {
+      return { message: "Missing required fields" };
+    }
+
+    const reminderTimestamp = new admin.firestore.Timestamp.fromDate(new Date(reminder_time));
+
+    await db.collection("reminders").add({
+      user_id: user_id,
+      text: reminder_text,
+      reminder_time: reminderTimestamp,
+      is_recurring: is_recurring,
+      created_at: admin.firestore.FieldValue.serverTimestamp()
+    });
+
+    return { message: "Reminder created successfully" };
+  } catch (error) {
+    console.error("Error creating reminder:", error);
+    return { message: "Failed to create reminder" };
+  }
+});
+

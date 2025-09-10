@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "group_project" "\0"
+            VALUE "FileDescription", "tasktracker" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "group_project" "\0"
+            VALUE "InternalName", "tasktracker" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "group_project.exe" "\0"
-            VALUE "ProductName", "group_project" "\0"
+            VALUE "OriginalFilename", "tasktracker.exe" "\0"
+            VALUE "ProductName", "tasktracker" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
